@@ -1,0 +1,44 @@
+#a web server is a computer system that stores processes and deliver web pages on requests
+
+this is done by http that gets the requests from the client and then fetches the response from the web server and delivers it to the client
+
+though normal web pages can be tested on pre available /localhost server but certain files like database, structure scripts or certain js function scripts cannot be tested on server side with local host because they do require http to be tested, for this we need to create our own server.
+
+HTTP
+1: socket is the main end point for a server this handles the communication b/w the client and the server and also allows server to handle multiple clients simultaneously w/o sockets data communication wont be possible
+   TCP transmission control protocol provides security and reliability to the server for data communication
+   IP addresses are the routes of the devices for communication
+
+2: socket options this allows the server to reuse the local address immediately after the socket is closed
+
+3: socket binding, give ip address and port number for our server to open on a device port number is unique which allows server to handle multiple clients using the same port number
+
+4: request content, first line= gives http method, url, protcol and its version
+ second line: specifies the domain name and ip along with the port number
+ third line: connection keep alive- tells the server that the client wants to keep the connection open for further communication
+ next line: tells about the info about clients browser, os and rendering engine 
+ next line: accept : image this header specifies the media type 
+ Sec-Fetch-Site: same-origin: lets us know if the request is being 
+    # made from the same origin as the destination.
+    # Sec-Fetch-Mode: no-cors: Specifies the mode for how the request 
+    # should be made regarding CORS (Cross-Origin Resource Sharing) 
+    # policies.What is CORS? A security mechanism implemented by 
+    # web browsers to protect users from certain types of cyber attacks,
+Sec-Fetch-Dest: navigate - tells the type of content the client 
+    # expects to receive as a response - in our case, the request is 
+    # to navigate the browser to a new document.
+    # Referer: http://localhost:8080/ - tells the address of the web 
+    # page that initiated the request. 
+    # Accept-Encoding: gzip, deflate, br, zstd - Tells the server 
+    # which encoding algorithms the client can understand for 
+    # compressing the response. This supports gzip, deflate, 
+    # Brotli (br), and Zstandard (zstd).
+    # Accept-Language: en-IN,en-GB;q=0.9,en-US;q=0.8,en;q=0.7: 
+    # Specifies the client's preferred languages, ordered by preference
+
+and the last thing is the optional message body (only present in the POST requests)
+
+5: post body, The raw HTTP request is typically structured with headers and a body. The headers are separated from the body by two line breaks, represented as \r\n\r\n (carriage return and line feed).
+The split('\r\n\r\n') method splits the raw request string into two parts:
+The first part (index 0) will contain the HTTP headers.
+The second part (index 1) will contain the body of the POST request.

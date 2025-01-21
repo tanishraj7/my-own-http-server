@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GINNIs Server</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #86afea, #5fc8e0);
+            color: #fff;
+            text-align: center;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+            width: 90%;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        p {
+            margin: 1rem 0;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .btn {
+            text-decoration: none;
+            display: inline-block;
+            padding: 0.8rem 1.8rem;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #fff;
+            background: #ff3e1c;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .btn:hover {
+            background: #ff6a5b;
+            transform: translateY(-3px);
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .link-btn {
+            text-decoration: none;
+            padding: 0.8rem 1.8rem;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #fff;
+            background: #296f2b;
+            border-radius: 8px;
+            text-transform: uppercase;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .link-btn:hover {
+            background: #45a049;
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to My Server</h1>
+        <p>Hello there my name is Tanish Raj Singh and I made this basic http server from scratch using python which as of now serves 'GET' and 'POST' requests with some basic protocols, lets have a quick info on what I just built. </p>
+        <p>HTTP (Hypertext Transfer Protocol) is the foundation of data communication on the web. It allows the transfer of resources such as HTML documents, images, and videos between clients (browsers) and servers. HTTP is stateless, meaning each request is independent, and servers do not retain user information between requests.</p>
+        <p>A web server is a software or hardware system that stores, processes, and delivers web pages to clients. When you type a URL in your browser, the browser sends an HTTP request to the server. The server processes this request and responds with the requested resource, typically a webpage or data.</p>
+        <p>Modern web servers can also handle secure connections using HTTPS (HTTP Secure), which encrypts data to provide secure communication over the internet. Popular web servers include Apache, Nginx, and Microsoft IIS, each with unique features and optimizations.</p>
+        <div class="btn-container">
+            <a onclick="alert('Exiting the server..')" href="https://www.google.com" class="btn">Exit Server</a>
+            <a href="https://tanish-raj-singh.netlify.app/" class="link-btn" target="_blank">My Portfolio</a>
+        </div>
+    </div>
+</body>
+</html>
+
