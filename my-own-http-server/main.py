@@ -1,8 +1,15 @@
 #first step is to create a socket 
 import socket
+import os
+import datetime
 
 USERNAME= 'admin'
 PASSWORD= 'ginni26'
+LOG_FILE= 'access.log' #file to store logs for the logs feature 
+
+#create a log file if it doesn't exist
+if not os.path.exists(LOG_FILE):
+    open(LOG_FILE, 'w').close()
 
 server_socket= socket.socket(socket.AF_INET, socket.SOCK_STREAM) #using ipv4 and TCP protocol as, address family and server type 
 
@@ -16,6 +23,24 @@ server_socket.bind((SERVER_HOST, SERVER_PORT)) #0.0.0.0 so that this server can 
 #0-1023 port numbers are assinged for default os
 server_socket.listen(5) #server is ready for incoming requests , we can also set the number of connection requests it can hold 
 print(f"Listening on port {SERVER_PORT}.. ")
+
+#now we need to create a function that will log our requests
+def log_request(client_ip, method, path):
+    timestamp= datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    log_entry= f"{timestamp} - {client_ip} - {method} {path}\n"
+    
+    with open(LOG_FILE, "a") as log_file:
+        log_file.write(log_entry)
+        
+        
+#now we will create a function to get logs from our log file to display it on the webpage
+def get_logs():
+        try:
+            with open(LOG_FILE, "r") as log_file:
+                return log_file.read()
+        except Exception as e:
+            return f"Error reading the log file: {str(e)}"
+        
 
 #we need a connection now for our server to show something
 while True: #so that we keep on listening for new requests
@@ -32,24 +57,52 @@ while True: #so that we keep on listening for new requests
     #so we use it here
     
     headers= request.split('\n') 
+    
+    #since we were again and again getting error due to index out of error in the header format we should fix this
+    if len(headers) < 1:
+        response= 'HTTP/1.1 400 Bad Request\n\nInvalid HTTP request format'
+        client_socket.sendall(response.encode())
+        client_socket.close
+        continue
+    
     first_header_components= headers[0].split() #getting the first line components for the request type the url and the protocol
+    
+    #now next function to fix index out of range error
+    if len(first_header_components) < 3:
+        response= 'HTTP/1.1 400 Bad Request\n\nInvalid HTTP request format'
+        client_socket.sendall(response.encode())
+        client_socket.close
+        continue
     
     http_method= first_header_components[0] #type of http method
     path= first_header_components[1] #path they are calling for
+    client_ip = client_add[0]
+    
+    #log the request
+    log_request(client_ip, http_method, path)
     
     if http_method == 'GET':
         if path == '/' or path == '/login':
             fin = open('login.html')
+            content= fin.read()
+            response= 'HTTP/1.1 200 OK\n\n' + content
         
         elif path == '/book':         #an example of enabling structure script testing/parsing one of the main reason to create your own http server
             fin= open('book.json')
+            content= fin.read()
+            response= 'HTTP/1.1 200 OK\n\n' + content
+            
+        elif path == '/logs':
+            fin= open('logs.html')
+            content= fin.read()
+            response= 'HTTP/1.1 200 OK\n\n' + content
+            
+        elif path == '/get-logs':
+            log_content= get_logs()
+            response= f"HTTP/1.1 200 OK\n\n{log_content}"
         
         else:
             response = 'HTTP/1.1 404 Not Found\n\nPage not found'
-        
-        content= fin.read()
-        
-        response= 'HTTP/1.1 200 OK\n\n' + content
         
     elif http_method== 'POST' and path== '/login':
          # Handle login submission
