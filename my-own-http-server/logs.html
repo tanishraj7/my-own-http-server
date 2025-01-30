@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Logs</title>
+    <style>
+        /* Reset default margin and padding */
+        body, h1, pre {
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* General body styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        
+        /* Container to hold the content */
+        .container {
+            background-color: white;
+            width: 80%;
+            max-width: 1000px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        /* Heading styles */
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        /* Log content area */
+        #logContent {
+            background-color: #2e2e2e;
+            color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            max-height: 400px;
+            overflow-y: scroll;
+        }
+
+        /* Styles for loading/error message */
+        #logContent.loading {
+            color: #FF9800;
+        }
+
+        #logContent.error {
+            color: #F44336;
+        }
+
+        /* Scrollbar customization */
+        #logContent::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #logContent::-webkit-scrollbar-thumb {
+            background-color: #4CAF50;
+            border-radius: 10px;
+        }
+
+        #logContent::-webkit-scrollbar-track {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Server Logs</h1>
+        <pre id="logContent" class="loading">Loading logs...</pre>
+    </div>
+
+    <script>
+        // Fetch logs from the server
+        fetch('/get-logs')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('logContent').textContent = data;
+                document.getElementById('logContent').classList.remove('loading');
+            })
+            .catch(error => {
+                document.getElementById('logContent').textContent = 'Error loading logs.';
+                document.getElementById('logContent').classList.remove('loading');
+                document.getElementById('logContent').classList.add('error');
+            });
+    </script>
+</body>
+</html>
